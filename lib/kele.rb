@@ -14,9 +14,18 @@ class Kele
 		end
 	end
 
+	def get_me
+		response = self.class.get(url, headers: { "authorization" => @auth_token })
+		JSON.parse(response.body)
+	end
+
 	private
 
 	def api_url
 		"https://www.bloc.io/api/v1/sessions"
+	end
+
+	def url
+		"https://www.bloc.io/api/v1/users/me"
 	end
 end
