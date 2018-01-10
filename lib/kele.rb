@@ -40,7 +40,7 @@ class Kele
 	def create_message(sender_email, recipient_id, message_body, subject)
 		response = self.class.post(api_url("messages"), headers: { "authorization" => @auth_token }, body: { sender: sender_email, recipient_id: recipient_id, stripped_text: message_body, subject: subject })
 
-		response.success? puts "Your message has been sent!"
+		puts "Your message has been sent!" if response.success?
 	end
 
 	def create_submission(checkpoint_id, assignment_branch, assignment_commit_link, comment, enrollment_id)
