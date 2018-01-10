@@ -26,7 +26,21 @@ class Kele
 	def get_mentor_availability(mentor_id)
 		response = self.class.get(api_url("mentors/2367142/student_availability"), headers: { "authorization" => @auth_token })
 
-		@mentor = JSON.parse(response.body)
+		@availability = JSON.parse(response.body)
+	end
+
+	def get_messages(page = 'all')
+		get_message = page == 'all' ? ("/message_threads?page#{page}") : get_message = "/message_threads"
+
+		response = self.class.get(api_url(get_message), headers: { "authorization" => @auth_token })
+
+		@messages = JSON.parse(response.body)
+	end
+
+	def create_message(sender_email, recipient_id, message_body, subject)
+		response = self.class.post(api_url("messages"), headers: { "authorization" => @auth_token }, body: { sender: sender_email, recipient_id: recipient_id, stripped_text: message_body, subject: subject })
+
+		response.success? puts "Your message has been sent!"
 	end
 
 	private
