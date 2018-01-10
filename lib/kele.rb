@@ -5,7 +5,13 @@ class Kele
 	include HTTParty
 
 	def initialize(email, password)
-		@auth_token = self.class.post(api_url, body: { email: email, password: password })
+		response = self.class.post(api_url, body: { email: email, password: password })
+
+		if response.code == 200
+			@auth_token = response["auth_token"]
+		else
+			p "Invalid Credentials -- You shall not pass!"
+		end
 	end
 
 	private
