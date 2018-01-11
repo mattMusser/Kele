@@ -18,13 +18,13 @@ class Kele
 	end
 
 	def get_me
-		response = self.class.get(api_url("users/me"), headers: { "authorization" => @auth_token })
+		response = self.class.get(api_url("users/me"), headers: headers)
 
 		@user = JSON.parse(response.body)
 	end
 
 	def get_mentor_availability(mentor_id)
-		response = self.class.get(api_url("mentors/2367142/student_availability"), headers: { "authorization" => @auth_token })
+		response = self.class.get(api_url("mentors/2367142/student_availability"), headers: headers)
 
 		@availability = JSON.parse(response.body)
 	end
@@ -32,13 +32,13 @@ class Kele
 	def get_messages(page = 'all')
 		get_message = page == 'all' ? ("/message_threads?page#{page}") : get_message = "/message_threads"
 
-		response = self.class.get(api_url(get_message), headers: { "authorization" => @auth_token })
+		response = self.class.get(api_url(get_message), headers: headers)
 
 		@messages = JSON.parse(response.body)
 	end
 
 	def create_message(sender_email, recipient_id, message_body, subject)
-		response = self.class.post(api_url("messages"), headers: { "authorization" => @auth_token }, body: { sender: sender_email, recipient_id: recipient_id, stripped_text: message_body, subject: subject })
+		response = self.class.post(api_url("messages"), headers: headers, body: { sender: sender_email, recipient_id: recipient_id, stripped_text: message_body, subject: subject })
 
 		puts "Your message has been sent!" if response.success?
 	end
