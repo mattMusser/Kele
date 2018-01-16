@@ -20,8 +20,8 @@ class Kele
 	end
 
 	def get_mentor_availability(mentor_id)
-		response = self.class.get(mentor_url, headers: { "authorization" => @auth_token })
-		JSON.parse(response.body)
+		response = self.class.get(mentor_url("#{mentor_id}/student_availability", headers: { "authorization" => @auth_token })
+		JSON.parse(response.body)git
 	end
 
 	private
@@ -34,7 +34,7 @@ class Kele
 		"https://www.bloc.io/api/v1/users/me"
 	end
 
-	def mentor_url
-		"https://www.bloc.io/api/v1/mentors/2367142/student_availability"
+	def mentor_url(endpoint)
+		"https://www.bloc.io/api/v1/mentors/#{endpoint}"
 	end
 end
